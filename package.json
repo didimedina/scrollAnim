@@ -1,0 +1,25 @@
+{
+  "name": "scroll-animations",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/didimedina/scrollAnim.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/didimedina/scrollAnim/issues"
+  },
+  "homepage": "https://github.com/didimedina/scrollAnim#readme",
+  "devDependencies": {
+    "sass": "^1.17.1"
+  },
+  "dependencies": {
+    "animejs": "^3.0.1"
+  }
+}
