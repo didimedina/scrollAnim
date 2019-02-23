@@ -1857,75 +1857,61 @@ var _animejs = _interopRequireDefault(require("animejs"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+var timelineSlideOne = document.querySelector('.slide-one');
+var timelineSlideTwo = document.querySelector('.slide-two');
+var timelineContainer = document.querySelector('.timeline-container');
+var timeline = document.querySelector('.timeline'); // const pointer = document.querySelector('.pointer');
+// HELPER FUNCTIONS
 
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+function buildThresholdList(steps) {
+  var thresholds = [];
+  var numSteps = steps;
 
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+  for (var i = 1.0; i <= numSteps; i++) {
+    var ratio = i / numSteps;
+    thresholds.push(ratio);
+  }
 
-// Intersection Observer
-// const target = document.querySelector('.element-container');
-// const options = {
-//     root: null,
-//     rootMargin: '0px',
-//     threshold: [...Array(100).keys()].map(num => (num + 1) / 100)
-// }
-// const animation = anime({
-//     targets: target,
-//     scale: .5,
-//     // translateX: 400,
-//     //loop: true,
-//     autoplay: false,
-//     easing: 'linear'
-// });
-// const intersectionHandler = (entries) => {
-//     entries.forEach(entry => animation.seek(animation.duration * entry.intersectionRatio));
-//     // entries.forEach(entry => console.log('💩'));
-// };
-// const io = new IntersectionObserver(intersectionHandler, options);
-// io.observe(target);
-var timelineScrollArea = document.querySelector('.section-two');
-var timelineContainer = document.querySelector('.element-container');
-var timeline = document.querySelector('.element');
-var pointer = document.querySelector('.pointer');
-var timelineStickyOptions = {
+  thresholds.push(0);
+  return thresholds;
+}
+
+function setParent(el, newParent) {
+  newParent.appendChild(el);
+} // Timeline slide two anim
+
+
+var slideTwoOptions = {
   root: null,
   rootMargin: '0px',
-  threshold: _toConsumableArray(Array(10).keys()).map(function (num) {
-    return (num + 1) / 10;
-  })
+  threshold: buildThresholdList(100)
 };
 
 var timelineStickyHandler = function timelineStickyHandler(entries) {
   entries.forEach(function (entry) {
-    if (entry.boundingClientRect.top <= entry.rootBounds.top && entry.boundingClientRect.bottom > entry.rootBounds.bottom) {
-      timelineContainer.classList.add('sticky');
-      timelineContainer.classList.remove("sticky-bottom");
-      console.log(timelineContainer.classList.value);
-    } else if (entry.boundingClientRect.bottom <= entry.rootBounds.bottom && entry.boundingClientRect.top < entry.rootBounds.top) {
-      timelineContainer.classList.remove('sticky');
-      timelineContainer.classList.add('sticky-bottom');
-      console.log(timelineContainer.classList.value);
+    if (entry.isIntersecting && entry.boundingClientRect.top <= entry.rootBounds.bottom && entry.boundingClientRect.top >= entry.rootBounds.top) {
+      console.log('✅ S2 animating');
+      timelineContainer.classList.remove("sticky-child");
+      timelineContainer.classList.add('sticky-vp');
+      slideTwoAnim.seek(slideTwoAnim.duration * entry.intersectionRatio);
+    } else if (entry.isIntersecting == false) {
+      console.log('🚫 S2 isnt showing!');
     } else {
-      timelineContainer.classList.remove("sticky");
-      timelineContainer.classList.remove("sticky-bottom");
-      console.log(timelineContainer.classList.value);
+      console.log('S2 animation over');
     }
   });
 };
 
-var timelineStickyIO = new IntersectionObserver(timelineStickyHandler, timelineStickyOptions);
-timelineStickyIO.observe(timelineScrollArea);
-(0, _animejs.default)({
+var slideTwoAnim = (0, _animejs.default)(_defineProperty({
   targets: '.pointer',
-  translateX: timeline.getBoundingClientRect().width - pointer.getBoundingClientRect().width,
-  loop: true,
+  translateX: timeline.getBoundingClientRect().width / 4,
   easing: 'easeOutQuad',
-  duration: 2000
-}); // console.log(timelineScrollArea.getBoundingClientRect().height);
-// IO gives back the bottom attribute
+  autoplay: false
+}, "easing", 'linear'));
+var slideTwoIO = new IntersectionObserver(timelineStickyHandler, slideTwoOptions);
+slideTwoIO.observe(timelineSlideTwo);
 },{"animejs":"node_modules/animejs/lib/anime.es.js"}],"../../../../../.nvm/versions/node/v11.2.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -1953,7 +1939,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57414" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57231" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
