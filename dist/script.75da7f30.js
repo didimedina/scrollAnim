@@ -1865,6 +1865,7 @@ var timeline = document.querySelector('.timeline'); // const pointer = document.
 // TODOS
 // 1. How do you make sure that as you translateX the text container that if its on mobile the text doesn't go off the screen?
 // 2. Need to figure out how to make the timeline track in JS
+// 3. Need to make the timeline stick to the right parent depending on scroll poisition of the page (currently it only sticks to the top on the way down)
 // HELPER FUNCTIONS
 
 function buildThresholdList(steps) {
@@ -2003,7 +2004,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55621" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51863" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
