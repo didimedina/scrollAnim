@@ -38,14 +38,6 @@ function range(start, end, steps) {
 // Timeline: Setup Anim
 const timelineWidth = timeline.getBoundingClientRect().width;
 const timelineSteps = range(0, timelineWidth, 5);
-
-const startAnim = anime({
-    targets: '.pointer',
-    translateX: timelineSteps[0],
-    easing: 'linear',
-    duration: 0
-});
-
 const slideOptions = {
     root: null,
     rootMargin: '0px',
@@ -57,7 +49,24 @@ const slideOneHandler = (entries) => {
     entries.forEach(function (entry) {
         if (entry.isIntersecting && entry.boundingClientRect.top <= entry.rootBounds.bottom && entry.boundingClientRect.top >= entry.rootBounds.top) {
             console.log('✅ S1 animating');
-            slideOneAnim.seek(slideTwoAnim.duration * entry.intersectionRatio);
+
+            const slideOneAnim = anime.timeline({
+                autoplay: false,
+                easing: 'linear'
+            });
+
+            slideOneAnim.add({
+                    targets: timelineContainer,
+                    opacity: [0, 1],
+                    translateX: [-300, 0]
+                })
+                .add({
+                    targets: '.pointer',
+                    height: [0, 200],
+                    opacity: [0, 1]
+                }, 200)
+
+            slideOneAnim.seek(slideOneAnim.duration * entry.intersectionRatio);
         } else if (entry.isIntersecting == false) {
             console.log('🚫 S1 isnt showing!');
         }
@@ -68,22 +77,6 @@ const slideOneIO = new IntersectionObserver(slideOneHandler, slideOptions);
 
 slideOneIO.observe(timelineSlideOne);
 
-const slideOneAnim = anime.timeline({
-    autoplay: false,
-    easing: 'linear'
-});
-
-slideOneAnim.add({
-    targets: timelineContainer,
-    opacity: [0, 1],
-    translateX: [-300, 0]
-})
-.add({
-    targets: '.pointer',
-    height: [0, 200],
-    opacity: [0, 1]
-}, 200)
-
 
 
 // Timeline: Slide Two Anim
@@ -93,6 +86,14 @@ const slideTwoHandler = (entries) => {
             console.log('✅ S2 animating');
             timelineContainer.classList.remove("sticky-child");
             timelineContainer.classList.add('sticky-vp');
+
+            const slideTwoAnim = anime({
+                targets: '.pointer',
+                translateX: [timelineSteps[0], timelineSteps[1]],
+                autoplay: false,
+                easing: 'linear'
+            });
+
             slideTwoAnim.seek(slideTwoAnim.duration * entry.intersectionRatio);
         } else if (entry.isIntersecting == false) {
             console.log('🚫 S2 isnt showing!');
@@ -103,23 +104,25 @@ const slideTwoHandler = (entries) => {
 const slideTwoIO = new IntersectionObserver(slideTwoHandler, slideOptions);
 
 slideTwoIO.observe(timelineSlideTwo);
- 
-const slideTwoAnim = anime({
-    targets: '.pointer',
-    translateX: [timelineSteps[0], timelineSteps[1]],
-    autoplay: false,
-    easing: 'linear'
-});
 
 
 
 // Timeline: Slide Three Anim
+
+
 const slideThreeHandler = (entries) => {
+
     entries.forEach(function (entry) {
         if (entry.isIntersecting && entry.boundingClientRect.top <= entry.rootBounds.bottom && entry.boundingClientRect.top >= entry.rootBounds.top) {
             console.log('✅ S3 animating');
-            // timelineContainer.classList.remove("sticky-child");
-            // timelineContainer.classList.add('sticky-vp');
+            const slideThreeAnim = anime({
+                targets: '.pointer',
+                translateX: [timelineSteps[1], timelineSteps[2]],
+                autoplay: false,
+                easing: 'linear'
+            });
+
+
             slideThreeAnim.seek(slideThreeAnim.duration * entry.intersectionRatio);
         } else if (entry.isIntersecting == false) {
             console.log('🚫 S3 isnt showing!');
@@ -131,9 +134,5 @@ const slideThreeIO = new IntersectionObserver(slideThreeHandler, slideOptions);
 
 slideThreeIO.observe(timelineSlideThree);
 
-const slideThreeAnim = anime({
-    targets: '.pointer',
-    translateX: [timelineSteps[1], timelineSteps[2]],
-    autoplay: false,
-    easing: 'linear'
-});
+
+

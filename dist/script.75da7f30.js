@@ -1896,12 +1896,6 @@ function range(start, end, steps) {
 
 var timelineWidth = timeline.getBoundingClientRect().width;
 var timelineSteps = range(0, timelineWidth, 5);
-var startAnim = (0, _animejs.default)({
-  targets: '.pointer',
-  translateX: timelineSteps[0],
-  easing: 'linear',
-  duration: 0
-});
 var slideOptions = {
   root: null,
   rootMargin: '0px',
@@ -1913,7 +1907,22 @@ var slideOneHandler = function slideOneHandler(entries) {
   entries.forEach(function (entry) {
     if (entry.isIntersecting && entry.boundingClientRect.top <= entry.rootBounds.bottom && entry.boundingClientRect.top >= entry.rootBounds.top) {
       console.log('✅ S1 animating');
-      slideOneAnim.seek(slideTwoAnim.duration * entry.intersectionRatio);
+
+      var slideOneAnim = _animejs.default.timeline({
+        autoplay: false,
+        easing: 'linear'
+      });
+
+      slideOneAnim.add({
+        targets: timelineContainer,
+        opacity: [0, 1],
+        translateX: [-300, 0]
+      }).add({
+        targets: '.pointer',
+        height: [0, 200],
+        opacity: [0, 1]
+      }, 200);
+      slideOneAnim.seek(slideOneAnim.duration * entry.intersectionRatio);
     } else if (entry.isIntersecting == false) {
       console.log('🚫 S1 isnt showing!');
     }
@@ -1921,22 +1930,7 @@ var slideOneHandler = function slideOneHandler(entries) {
 };
 
 var slideOneIO = new IntersectionObserver(slideOneHandler, slideOptions);
-slideOneIO.observe(timelineSlideOne);
-
-var slideOneAnim = _animejs.default.timeline({
-  autoplay: false,
-  easing: 'linear'
-});
-
-slideOneAnim.add({
-  targets: timelineContainer,
-  opacity: [0, 1],
-  translateX: [-300, 0]
-}).add({
-  targets: '.pointer',
-  height: [0, 200],
-  opacity: [0, 1]
-}, 200); // Timeline: Slide Two Anim
+slideOneIO.observe(timelineSlideOne); // Timeline: Slide Two Anim
 
 var slideTwoHandler = function slideTwoHandler(entries) {
   entries.forEach(function (entry) {
@@ -1944,6 +1938,12 @@ var slideTwoHandler = function slideTwoHandler(entries) {
       console.log('✅ S2 animating');
       timelineContainer.classList.remove("sticky-child");
       timelineContainer.classList.add('sticky-vp');
+      var slideTwoAnim = (0, _animejs.default)({
+        targets: '.pointer',
+        translateX: [timelineSteps[0], timelineSteps[1]],
+        autoplay: false,
+        easing: 'linear'
+      });
       slideTwoAnim.seek(slideTwoAnim.duration * entry.intersectionRatio);
     } else if (entry.isIntersecting == false) {
       console.log('🚫 S2 isnt showing!');
@@ -1952,20 +1952,18 @@ var slideTwoHandler = function slideTwoHandler(entries) {
 };
 
 var slideTwoIO = new IntersectionObserver(slideTwoHandler, slideOptions);
-slideTwoIO.observe(timelineSlideTwo);
-var slideTwoAnim = (0, _animejs.default)({
-  targets: '.pointer',
-  translateX: [timelineSteps[0], timelineSteps[1]],
-  autoplay: false,
-  easing: 'linear'
-}); // Timeline: Slide Three Anim
+slideTwoIO.observe(timelineSlideTwo); // Timeline: Slide Three Anim
 
 var slideThreeHandler = function slideThreeHandler(entries) {
   entries.forEach(function (entry) {
     if (entry.isIntersecting && entry.boundingClientRect.top <= entry.rootBounds.bottom && entry.boundingClientRect.top >= entry.rootBounds.top) {
-      console.log('✅ S3 animating'); // timelineContainer.classList.remove("sticky-child");
-      // timelineContainer.classList.add('sticky-vp');
-
+      console.log('✅ S3 animating');
+      var slideThreeAnim = (0, _animejs.default)({
+        targets: '.pointer',
+        translateX: [timelineSteps[1], timelineSteps[2]],
+        autoplay: false,
+        easing: 'linear'
+      });
       slideThreeAnim.seek(slideThreeAnim.duration * entry.intersectionRatio);
     } else if (entry.isIntersecting == false) {
       console.log('🚫 S3 isnt showing!');
@@ -1975,12 +1973,6 @@ var slideThreeHandler = function slideThreeHandler(entries) {
 
 var slideThreeIO = new IntersectionObserver(slideThreeHandler, slideOptions);
 slideThreeIO.observe(timelineSlideThree);
-var slideThreeAnim = (0, _animejs.default)({
-  targets: '.pointer',
-  translateX: [timelineSteps[1], timelineSteps[2]],
-  autoplay: false,
-  easing: 'linear'
-});
 },{"animejs":"node_modules/animejs/lib/anime.es.js"}],"../../../../../.nvm/versions/node/v11.2.0/lib/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -2008,7 +2000,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57934" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55621" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
