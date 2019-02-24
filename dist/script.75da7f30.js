@@ -1866,6 +1866,7 @@ var timeline = document.querySelector('.timeline'); // const pointer = document.
 // 1. How do you make sure that as you translateX the text container that if its on mobile the text doesn't go off the screen?
 // 2. Need to figure out how to make the timeline track in JS
 // 3. Need to make the timeline stick to the right parent depending on scroll poisition of the page (currently it only sticks to the top on the way down)
+// 4. Figure out how to make the first slide anim finish sooner than when the entire screen is visible. Could it be done by making the slide shorter? but that would trigger the next animation too potentially...
 // HELPER FUNCTIONS
 
 function buildThresholdList(steps) {
