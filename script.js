@@ -8,6 +8,11 @@ const timeline = document.querySelector('.timeline');
 // const pointer = document.querySelector('.pointer');
 
 
+// TODOS
+// 1. How do you make sure that as you translateX the text container that if its on mobile the text doesn't go off the screen?
+// 2. Need to figure out how to make the timeline track in JS
+
+
 // HELPER FUNCTIONS
 function buildThresholdList(steps) {
     var thresholds = [];
