@@ -4,8 +4,9 @@ const timelineSlideOne = document.querySelector('.slide-one');
 const timelineSlideTwo = document.querySelector('.slide-two');
 const timelineSlideThree = document.querySelector('.slide-three');
 const timelineContainer = document.querySelector('.timeline-container');
-const timeline = document.querySelector('.timeline');
-// const pointer = document.querySelector('.pointer');
+const timeline = document.querySelector('.timeline__events-container');
+const event = document.querySelector('.events');
+const eventTitle = document.querySelector('.events');
 
 
 // TODOS
@@ -65,7 +66,7 @@ const slideOneHandler = (entries) => {
             slideOneAnim.add({
                     targets: timelineContainer,
                     opacity: [0, 1],
-                    translateX: [-300, 0]
+                    translateY: [-200, 0]
                 })
                 .add({
                     targets: '.pointer',
@@ -95,7 +96,7 @@ const slideTwoHandler = (entries) => {
             timelineContainer.classList.add('sticky-vp');
 
             const slideTwoAnim = anime({
-                targets: '.pointer',
+                targets: event,
                 translateX: [timelineSteps[0], timelineSteps[1]],
                 autoplay: false,
                 easing: 'linear'
@@ -116,21 +117,31 @@ slideTwoIO.observe(timelineSlideTwo);
 
 // Timeline: Slide Three Anim
 
-
+let played = false;
 const slideThreeHandler = (entries) => {
-
+    
     entries.forEach(function (entry) {
         if (entry.isIntersecting && entry.boundingClientRect.top <= entry.rootBounds.bottom && entry.boundingClientRect.top >= entry.rootBounds.top) {
             console.log('✅ S3 animating');
+
+            
+
             const slideThreeAnim = anime({
-                targets: '.pointer',
+                targets: event,
                 translateX: [timelineSteps[1], timelineSteps[2]],
                 autoplay: false,
                 easing: 'linear'
             });
-
-
             slideThreeAnim.seek(slideThreeAnim.duration * entry.intersectionRatio);
+            if (played == false) {
+                anime({
+                    targets: eventTitle,
+                    translateY: -20,
+                    autoplay: false
+                });
+                
+                played = !played;
+            }
         } else if (entry.isIntersecting == false) {
             console.log('🚫 S3 isnt showing!');
         } 

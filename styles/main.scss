@@ -44,31 +44,42 @@
 
 .timeline-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     // box-shadow: inset 0 0 0 10px #000000;
     height: 100vh;
     width: 100vw;
+    border: 2px dotted blue;
     // background-color: black;
 }
 
-// .sticky-bottom {
-//     position: absolute;
-//     bottom: 0px;
-//     top: unset;
-// }
-
-.timeline {
-    width: 70vw;
-    height: 20vh;
-    background-color: white;
+.timeline__events-container {
+    width: 80%;
+    max-width: 896px;
+    min-height: 30vh;
+    // background-color: white;
     position: relative;
+    // border: 2px dotted blue;
+}
+
+.timeline__dashed-line {
+    height: 1px;
+    background-color: black;
+    width: 100%;
+}
+
+.events {
+   position: relative;
+   top: 0px;
+   min-height: 100%;
+   max-width: 512px; 
 }
 
 .pointer {
-    width: 4px;
-    height: 100%;
-    background-color: red;
+    width: 1px;
+    height: 30%;
+    background-color: black;
     position: absolute;
     bottom: 0;
     left: 0;
